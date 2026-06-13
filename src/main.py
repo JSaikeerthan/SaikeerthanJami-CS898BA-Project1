@@ -1,6 +1,8 @@
 import cv2
 from image_statistics import print_channel_statistics
 from conversions import generate_conversions
+from affine_transforms import create_affine_transformations
+from gaussian_blur import apply_gaussian_blurs
 
 IMAGE_PATH = "images/HW1_IMG.png"
 
@@ -18,4 +20,17 @@ print_channel_statistics(blue, "Blue")
 generate_conversions(
     "images/HW1_IMG.png",
     "results/converted"
+)
+
+create_affine_transformations(
+    "results/converted",
+    "results/transformed"
+)
+
+apply_gaussian_blurs(
+    [
+        "results/converted",
+        "results/transformed"
+    ],
+    "results/blurred"
 )
