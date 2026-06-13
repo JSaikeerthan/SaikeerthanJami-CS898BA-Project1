@@ -1,5 +1,6 @@
 import cv2
 from image_statistics import print_channel_statistics
+from conversions import generate_conversions
 
 IMAGE_PATH = "images/HW1_IMG.png"
 
@@ -13,3 +14,8 @@ blue, green, red = cv2.split(image)
 print_channel_statistics(red, "Red")
 print_channel_statistics(green, "Green")
 print_channel_statistics(blue, "Blue")
+
+generate_conversions(
+    "images/HW1_IMG.png",
+    "results/converted"
+)
