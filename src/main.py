@@ -3,6 +3,7 @@ from image_statistics import print_channel_statistics
 from conversions import generate_conversions
 from affine_transforms import create_affine_transformations
 from gaussian_blur import apply_gaussian_blurs
+from create_subsets import create_subsets
 
 IMAGE_PATH = "images/HW1_IMG.png"
 
@@ -34,3 +35,4 @@ apply_gaussian_blurs(
     ],
     "results/blurred"
 )
+create_subsets()
