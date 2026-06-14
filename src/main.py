@@ -4,6 +4,7 @@ from conversions import generate_conversions
 from affine_transforms import create_affine_transformations
 from gaussian_blur import apply_gaussian_blurs
 from create_subsets import create_subsets
+from edge_detection import detect_edges
 
 IMAGE_PATH = "images/HW1_IMG.png"
 
@@ -36,3 +37,5 @@ apply_gaussian_blurs(
     "results/blurred"
 )
 create_subsets()
+
+detect_edges()
