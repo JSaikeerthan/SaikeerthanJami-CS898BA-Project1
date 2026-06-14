@@ -318,52 +318,51 @@ Six representative plots were selected for this report.
 
 ## Plot 1
 
-```markdown
+
 <img src="results/plots/readme_plots/original_rotated_sigma_3.0_plot.png" width="900">
 
 <p><b>Processing Applied:</b> Original image → Rotation affine transformation → Gaussian blur (σ = 3.0).</p>
-```
+
 
 ## Plot 2
 
-```markdown
+
 <img src="results/plots/readme_plots/binary_rotated_sigma_0.5_plot.png" width="900">
 
 <p><b>Processing Applied:</b> Binary image → Rotation affine transformation → Gaussian blur (σ = 0.5).</p>
-```
+
 
 ## Plot 3
 
-```markdown
+
 <img src="results/plots/readme_plots/binary_translated_sigma_2.0_plot.png" width="900">
 
 <p><b>Processing Applied:</b> Binary image → Translation affine transformation → Gaussian blur (σ = 2.0).</p>
-```
+
 
 ## Plot 4
 
-```markdown
+
 <img src="results/plots/readme_plots/grayscale_translated_sigma_1.5_plot.png" width="900">
 
 <p><b>Processing Applied:</b> Grayscale image → Translation affine transformation → Gaussian blur (σ = 1.5).</p>
 
-```
+
 
 ## Plot 5
 
-```markdown
+
 <img src="results/plots/readme_plots/hls_plot.png" width="900">
 
 <p><b>Processing Applied:</b> HLS color space conversion.</p>
-```
 
 ## Plot 6
 
-```markdown
+
 <img src="results/plots/readme_plots/normalized_rgb_rotated_sigma_0.5_plot.png" width="900">
 
 <p><b>Processing Applied:</b> HSV histogram equalization followed by conversion back to RGB → Rotation affine transformation → Gaussian blur (σ = 0.5).</p>
-```
+
 ---
 
 # Final Image Counts
