@@ -6,6 +6,7 @@ from gaussian_blur import apply_gaussian_blurs
 from create_subsets import create_subsets
 from edge_detection import detect_edges
 from plot_results import generate_plots
+from normalization import normalize_channels
 
 IMAGE_PATH = "images/HW1_IMG.png"
 
@@ -42,3 +43,8 @@ create_subsets()
 detect_edges()
 
 generate_plots()
+
+normalized = normalize_channels(
+    "images/HW1_IMG.png",
+    "results/segmentation/normalized.png"
+)
