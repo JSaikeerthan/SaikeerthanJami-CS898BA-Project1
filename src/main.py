@@ -7,6 +7,7 @@ from create_subsets import create_subsets
 from edge_detection import detect_edges
 from plot_results import generate_plots
 from normalization import normalize_channels
+from threshold_segmentation import threshold_segmentation
 
 IMAGE_PATH = "images/HW1_IMG.png"
 
@@ -47,4 +48,8 @@ generate_plots()
 normalized = normalize_channels(
     "images/HW1_IMG.png",
     "results/segmentation/normalized.png"
+)
+
+otsu_mask, adaptive_mask = threshold_segmentation(
+    normalized
 )
