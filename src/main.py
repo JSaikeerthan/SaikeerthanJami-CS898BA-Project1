@@ -24,10 +24,29 @@ ground_truth = cv2.imread(
     cv2.IMREAD_GRAYSCALE
 )
 
-iou, dice = evaluate(
+otsu_iou, otsu_dice = evaluate(
+    otsu_mask,
+    ground_truth
+)
+
+adaptive_iou, adaptive_dice = evaluate(
+    adaptive_mask,
+    ground_truth
+)
+
+kmeans_iou, kmeans_dice = evaluate(
     kmeans_mask,
     ground_truth
 )
 
-print(f"KMeans IoU: {iou:.4f}")
-print(f"KMeans Dice: {dice:.4f}")
+print("\nSegmentation Evaluation")
+print("-" * 40)
+
+print(f"Otsu IoU: {otsu_iou:.4f}")
+print(f"Otsu Dice: {otsu_dice:.4f}")
+
+print(f"Adaptive IoU: {adaptive_iou:.4f}")
+print(f"Adaptive Dice: {adaptive_dice:.4f}")
+
+print(f"KMeans IoU: {kmeans_iou:.4f}")
+print(f"KMeans Dice: {kmeans_dice:.4f}")
