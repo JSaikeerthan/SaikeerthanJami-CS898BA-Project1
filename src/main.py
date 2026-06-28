@@ -3,6 +3,7 @@ from normalization import normalize_channels
 from threshold_segmentation import threshold_segmentation
 from kmeans_segmentation import kmeans_segmentation
 from metrics import evaluate
+from comparison_plot import create_plot
 
 
 normalized = normalize_channels(
@@ -50,3 +51,16 @@ print(f"Adaptive Dice: {adaptive_dice:.4f}")
 
 print(f"KMeans IoU: {kmeans_iou:.4f}")
 print(f"KMeans Dice: {kmeans_dice:.4f}")
+
+original = cv2.imread(
+    "images/HW1_IMG.png"
+)
+
+create_plot(
+    original,
+    normalized,
+    otsu_mask,
+    adaptive_mask,
+    kmeans_mask,
+    ground_truth
+)
