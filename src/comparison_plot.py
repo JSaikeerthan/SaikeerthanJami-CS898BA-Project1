@@ -8,7 +8,20 @@ def create_plot(original,
                 adaptive,
                 kmeans,
                 ground_truth):
+    """
+    Creating a comparison plot showing all
+    segmentation results.
 
+    Parameters:
+        original: Original image.
+        normalized: Normalized image.
+        otsu: Otsu mask.
+        adaptive: Adaptive mask.
+        kmeans: K-Means mask.
+        ground_truth: Reference mask.
+    """
+
+    # Store images and titles
     images = [
         cv2.cvtColor(original, cv2.COLOR_BGR2RGB),
         cv2.cvtColor(normalized, cv2.COLOR_BGR2RGB),
@@ -27,6 +40,7 @@ def create_plot(original,
         "Ground Truth"
     ]
 
+    # Create figure
     plt.figure(figsize=(18, 10))
 
     for i in range(6):
@@ -43,6 +57,7 @@ def create_plot(original,
 
     plt.tight_layout()
 
+    #Save comparison figure
     plt.savefig(
         "results/evaluation/comparison_plot.png"
     )

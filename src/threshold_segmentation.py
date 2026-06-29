@@ -2,7 +2,18 @@ import cv2
 
 
 def threshold_segmentation(image):
+    """
+     Perform Otsu and Adaptive threshold segmentation.
 
+     Parameters:
+           image (numpy.ndarray): Normalized color image.
+
+    Returns:
+           otsu (numpy.ndarray): Otsu binary mask.
+           adaptive (numpy.ndarray): Adaptive binary mask. 
+    """
+
+    # Convert image to grayscale
     gray = cv2.cvtColor(
         image,
         cv2.COLOR_BGR2GRAY
@@ -29,6 +40,8 @@ def threshold_segmentation(image):
         2
     )
 
+     # Save binary masks
+
     cv2.imwrite(
         "results/segmentation/masks/otsu.png",
         otsu
@@ -39,6 +52,7 @@ def threshold_segmentation(image):
         adaptive
     )
 
+# Extract foreground regions
     foreground_otsu = cv2.bitwise_and(
         image,
         image,
@@ -51,6 +65,7 @@ def threshold_segmentation(image):
         mask=adaptive
     )
 
+# Save extracted foreground images
     cv2.imwrite(
         "results/segmentation/foregrounds/otsu_foreground.png",
         foreground_otsu

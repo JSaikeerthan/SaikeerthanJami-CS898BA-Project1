@@ -2,7 +2,9 @@
 
 | Date and Time | Prompt                                                                 | Tool    | Response Synopsis                                                                        | Change                                |
 | ------------- | ---------------------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------- | ------------------------------------- |
-| 06/10/2026 | Repository setup for CS898BA Project 1 | ChatGPT | Guided project initialization and environment setup | Created repository structure |
-| 06/12/2026    | Guide me through implementing image statistics for the homework image. | ChatGPT | Provided Python  algorithm code structure using OpenCV, NumPy, and SciPy to calculate RGB channel statistics. | Added image statistics functionality. |
-
-
+| 06/25/2026 04:30 PM | Guide me the process of branching a Git repository and project structure | ChatGPT | Provided step-by-step setup instructions for Windows Git + Python environment | Created a new branch with similar repository structure and initialized project |
+| 06/25/2026 08:00 PM | Guidance for multi-channel histogram equalization for image normalization. | ChatGPT | Provided OpenCV functions for histogram equalization across RGB channels.       | Generated normalized color image for segmentation tasks.               |
+| 06/26/2026 08:45 PM | Explain Otsu thresholding and adaptive thresholding segmentation methods.  | ChatGPT | Provided segmentation examples and explained thresholding techniques.          | Created Otsu and adaptive masks and foreground images.                 |
+| 06/27/2026 09:30 PM | Guide to implement K-Means clustering in HSV color space.                        | ChatGPT | Provided K-Means segmentation and HSV conversion guidance with functions required.  | Generated K-Means masks and segmented foreground images.               |
+| 06/27/2026 10:15 PM | Explain the advantages and disadvantages of the segmentation methods.        | ChatGPT | Discussed strengths and weaknesses of Otsu, Adaptive, and K-Means methods. | Used analysis in the results discussion section.                       |
+| 06/27/2026 11:30 PM | Guide me in IoU and Dice Coefficient calculations.                             | ChatGPT | Provided mathematical formulas and Python code for evaluation metrics.     | Added quantitative performance evaluation to the project.              |
