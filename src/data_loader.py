@@ -160,6 +160,9 @@ def create_dataset(paths, labels, augment=False):
 
     dataset = dataset.batch(BATCH_SIZE)
 
+    if not augment:
+        dataset = dataset.cache()
+
     dataset = dataset.prefetch(
         tf.data.AUTOTUNE
     )
