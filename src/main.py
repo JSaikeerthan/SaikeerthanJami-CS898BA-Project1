@@ -2,6 +2,7 @@ from data_loader import load_datasets
 from model import build_model
 from trainer import train_model
 from tuner import tune_model
+from evaluate import evaluate_model
 
 # Load datasets
 train_ds, val_ds, test_ds, class_names = load_datasets("fish")
@@ -35,4 +36,19 @@ best_model, tuned_history, best_hp = tune_model(
 
     len(class_names)
 
+)
+
+#Evaluate model
+print("\nEvaluating Baseline Model...\n")
+
+baseline_metrics = evaluate_model(
+    model,
+    test_ds
+)
+
+print("\nEvaluating Tuned Model...\n")
+
+tuned_metrics = evaluate_model(
+    best_model,
+    test_ds
 )
