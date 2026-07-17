@@ -3,6 +3,7 @@ from model import build_model
 from trainer import train_model
 from tuner import tune_model
 from evaluate import evaluate_model
+from plots import plot_history, plot_confusion_matrix
 
 # Load datasets
 train_ds, val_ds, test_ds, class_names = load_datasets("fish")
@@ -51,4 +52,29 @@ print("\nEvaluating Tuned Model...\n")
 tuned_metrics = evaluate_model(
     best_model,
     test_ds
+)
+
+#Plots
+plot_history(
+    history,
+    "baseline",
+    "Baseline CNN"
+)
+
+plot_history(
+    tuned_history,
+    "optimized",
+    "Optimized CNN"
+)
+
+plot_confusion_matrix(
+    baseline_metrics["matrix"],
+    class_names,
+    "baseline_confusion_matrix"
+)
+
+plot_confusion_matrix(
+    tuned_metrics["matrix"],
+    class_names,
+    "optimized_confusion_matrix"
 )
