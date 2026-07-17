@@ -1,94 +1,204 @@
-# SaikeerthanJami-CS898BA-Project1
+# Homework Three: Deep Learning for Fish Classification
 
-## CS 898BA – Image Analysis and Computer Vision
+**Course:** CS 898BA – Image Analysis and Computer Vision
 
-**Homework 1**
-
----
-
-## Overview
-
-This project explores fundamental image processing and computer vision techniques using Python and OpenCV. The assignment includes:
-
-* Basic image statistics
-* Color space conversions
-* Histogram equalization
-* Affine transformations
-* Gaussian blurring
-* Edge detection
-* Visualization and comparison of edge detection methods
-
-The project was developed incrementally using Git with meaningful commits and all AI assistance was documented in `AI_Log.md`.
+**Student:** Saikeerthan Jami
 
 ---
 
-## Project Structure
+# Project Overview
 
-```text
-SaikeerthanJami-CS898BA-Project1
-│
-├── images
-│   └── HW1_IMG.png
-│
-├── results
-│   ├── converted
-│   ├── transformed
-│   ├── blurred
-│   ├── subsets
-│   ├── edges
-│   └── plots
-│
-├── src
-│   ├── main.py
-│   ├── image_statistics.py
-│   ├── conversions.py
-│   ├── affine_transforms.py
-│   ├── gaussian_blur.py
-│   ├── create_subsets.py
-│   ├── edge_detection.py
-│   └── plot_results.py
-│
-├── README.md
-├── AI_Log.md
-├── requirements.txt
-└── .gitignore
-```
+This project implements a complete deep learning pipeline for multi-class fish image classification using TensorFlow/Keras. A custom Convolutional Neural Network (CNN) was developed to classify six fish species. Hyperparameter optimization was performed using KerasTuner to improve model performance, and both the baseline and optimized models were evaluated on an unseen test dataset.
 
 ---
 
-## Requirements
+# Objectives
 
-* Python 3.13
-* OpenCV
-* NumPy
-* SciPy
-* Matplotlib
-* Pandas
+- Build a custom CNN from scratch.
+- Preprocess and augment the fish image dataset.
+- Perform hyperparameter optimization.
+- Compare baseline and optimized models.
+- Evaluate using multiple classification metrics.
+- Visualize training performance and confusion matrices.
 
 ---
 
-## Installation
+# Dataset
 
-Clone the repository:
+The dataset contains six fish species.
 
-```bash
-git clone https://github.com/JSaikeerthan/SaikeerthanJami-CS898BA-Project1.git
-cd SaikeerthanJami-CS898BA-Project1
+## Classes
+
+- Bete
+- Cray
+- Discuss
+- Gold
+- Guppy
+- Oscar
+
+## Dataset Split
+
+| Dataset | Images |
+|---------|--------:|
+| Training | 711 |
+| Validation | 152 |
+| Testing | 153 |
+| Total | 1016 |
+
+All images were resized to **128 × 128** pixels and normalized to the **[0,1]** range.
+
+---
+
+# Data Preprocessing
+
+The preprocessing pipeline includes:
+
+- Stratified train/validation/test split
+- Image resizing (128×128)
+- Pixel normalization
+- Random horizontal flip
+- Random brightness adjustment
+- Random contrast adjustment
+- TensorFlow Dataset pipeline with batching, shuffling, and prefetching
+
+---
+
+# Baseline CNN Architecture
+
+The custom CNN consists of:
+
+| Layer | Configuration |
+|--------|---------------|
+| Conv2D | 32 Filters |
+| MaxPooling2D | 2×2 |
+| Conv2D | 64 Filters |
+| MaxPooling2D | 2×2 |
+| Conv2D | 128 Filters |
+| MaxPooling2D | 2×2 |
+| Flatten | — |
+| Dense | 128 Units |
+| Dropout | 0.30 |
+| Output | 6-Class Softmax |
+
+Optimizer:
+
+- Adam
+
+Loss Function:
+
+- Sparse Categorical Crossentropy
+
+Epochs:
+
+- 20
+
+---
+
+# Hyperparameter Optimization
+
+Hyperparameter tuning was performed using **KerasTuner Random Search**.
+
+## Search Space
+
+### Learning Rate
+
+- 0.01
+- 0.001
+- 0.0001
+
+### Dense Units
+
+- 128
+- 256
+
+### Dropout
+
+- 0.30
+- 0.50
+
+## Best Hyperparameters
+
+| Hyperparameter | Best Value |
+|---------------|-----------:|
+| Learning Rate | 0.001 |
+| Dense Units | 128 |
+| Dropout | 0.30 |
+
+---
+
+# Model Evaluation
+
+## Baseline CNN
+
+| Metric | Score |
+|--------|-------:|
+| Accuracy | **84.97%** |
+| Precision | **85.32%** |
+| Recall | **84.97%** |
+| F1 Score | **84.54%** |
+
+---
+
+## Optimized CNN
+
+| Metric | Score |
+|--------|-------:|
+| Accuracy | **84.31%** |
+| Precision | **84.30%** |
+| Recall | **84.31%** |
+| F1 Score | **84.13%** |
+
+---
+
+# Performance Analysis
+
+The baseline CNN achieved excellent classification performance on the testing dataset.
+
+Data augmentation techniques, including horizontal flipping and brightness/contrast adjustments, improved model robustness by exposing the network to more diverse image variations during training.
+
+Hyperparameter tuning explored different combinations of learning rate, dense layer size, and dropout. The optimal validation configuration selected:
+
+- Learning Rate = 0.001
+- Dense Units = 128
+- Dropout = 0.30
+
+Although this configuration minimized validation loss, the baseline model slightly outperformed the optimized model on the held-out testing dataset. This demonstrates that the best validation model does not always produce the highest testing accuracy due to differences between validation and test distributions.
+
+The Discuss, Gold, and Guppy classes were classified consistently well, while the Cray class remained the most challenging because of fewer training samples and greater visual similarity to other species.
+
+---
+
+# Results
+
+Generated outputs include:
+
+- Baseline Accuracy Curve
+- Baseline Loss Curve
+- Optimized Accuracy Curve
+- Optimized Loss Curve
+- Optimized Confusion Matrix
+- Classification Reports
+
+These are saved under:
+
 ```
-
-Create a virtual environment:
-
-```bash
-python -m venv venv
+outputs/plots/
 ```
+## Training and Evaluation Results
 
-Activate the virtual environment:
+![Baseline Accuracy](outputs/plots/baseline_accuracy.png)
 
-### Windows
+![Baseline Loss](outputs/plots/baseline_loss.png)
 
-```bash
-venv\Scripts\activate
-```
+![Optimized Accuracy](outputs/plots/optimized_accuracy.png)
+
+![Optimized Loss](outputs/plots/optimized_loss.png)
+
+![Optimized Confusion Matrix](outputs/plots/optimized_confusion_matrix.png)
+
+---
+
+# Running the Project
 
 Install dependencies:
 
@@ -96,300 +206,29 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
----
-
-## Running the Project
-
-Execute:
+Run the complete pipeline:
 
 ```bash
 python src/main.py
 ```
 
----
+The script performs:
 
-# Part 2: Image Processing
-
-## Basic Image Statistics
-
-For each RGB channel, the following statistics were computed:
-
-* Minimum
-* Maximum
-* Average
-* Median
-* Mode
-* Skew
-* Range
-* Standard Deviation
-* Variance
-
-### Results
-
-| Channel | Mean  | Median | Mode | Std Dev | Variance |
-| ------- | ----- | ------ | ---- | ------- | -------- |
-| Red     | 20.61 | 12     | 4    | 22.46   | 504.26   |
-| Green   | 24.64 | 16     | 10   | 22.23   | 493.96   |
-| Blue    | 21.83 | 10     | 4    | 26.23   | 687.99   |
-
-The relatively low mean intensity values indicate that the image is generally dark with a few bright regions.
+1. Data loading and preprocessing
+2. Baseline CNN training
+3. Hyperparameter tuning
+4. Optimized model training
+5. Model evaluation
+6. Plot generation
 
 ---
 
-## Color Space Conversions
+# Technologies Used
 
-The following image representations were generated:
-
-1. Original RGB Image
-2. Grayscale Image
-3. Binary Image
-4. HSV Image
-5. CIELAB Image
-6. HLS Image
-7. Histogram Equalized HSV Image converted back to RGB
-
-Total images:
-
-```text
-7 images
-```
-
+- Python 3.13
+- TensorFlow / Keras
+- KerasTuner
+- NumPy
+- Matplotlib
+- Scikit-learn
 ---
-
-## Histogram Equalization
-
-Histogram equalization was applied to the Value (V) channel of the HSV image.
-
-### Observations
-
-* Increased overall contrast
-* Improved visibility in darker regions
-* Enhanced object details
-* Better illumination normalization
-
----
-
-## Affine Transformations
-
-Two unique affine transformations were applied to each of the seven images.
-
-Examples:
-
-* Rotation
-* Translation
-* Scaling
-* Shearing
-
-Total images after transformation:
-
-```text
-21 images
-```
-
----
-
-## Gaussian Blur
-
-Gaussian blur was applied using the following sigma values:
-
-```text
-0.5
-1.0
-1.5
-2.0
-2.5
-3.0
-3.5
-```
-
-Total images:
-
-```text
-168 images
-```
-
-### Discussion
-
-As sigma increased:
-
-* Noise reduction improved.
-* Fine textures disappeared.
-* Edges became softer.
-* High-frequency information was gradually removed.
-
-Small sigma values preserved image details, while large sigma values produced heavy smoothing and loss of detail.
-
----
-
-# Part 3: Edge Detection
-
-The dataset of 168 images was randomly divided into four equally sized subsets.
-
-Each subset contained:
-
-```text
-42 images
-```
-
-One subset was selected for edge detection experiments.
-
----
-
-## Edge Detection Methods
-
-### Sobel
-
-#### Advantages
-
-* Fast computation
-* Provides gradient direction information
-
-#### Disadvantages
-
-* Produces thick edges
-* Sensitive to noise
-
----
-
-### Laplacian
-
-#### Advantages
-
-* Detects edges in all directions
-* Highlights fine detail
-
-#### Disadvantages
-
-* Extremely sensitive to noise
-* Amplifies artifacts
-
----
-
-### Canny
-
-#### Advantages
-
-* Produces thin and continuous edges
-* Excellent noise suppression
-* Strong edge localization
-
-#### Disadvantages
-
-* Requires threshold tuning
-* Computationally more expensive
-
----
-
-### Prewitt
-
-#### Advantages
-
-* Simple implementation
-* Computationally inexpensive
-
-#### Disadvantages
-
-* Less accurate than Sobel
-* More susceptible to noise
-
----
-
-## Edge Detection Analysis
-
-Among the four methods, Canny generally produced the cleanest and most continuous object boundaries while suppressing noise effectively.
-
-Sobel and Prewitt successfully detected major structures but generated thicker edges.
-
-Laplacian highlighted many fine details but also amplified image noise and artifacts, especially in heavily blurred images.
-
-For this dataset, Canny provided the best balance between noise suppression and edge localization.
-
----
-
-# Comparison Plots
-
-The project generated:
-
-```text
-42 comparison plots
-```
-
-Six representative plots were selected for this report.
-
-## Plot 1
-
-
-<img src="results/plots/readme_plots/original_rotated_sigma_3.0_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Original image → Rotation affine transformation → Gaussian blur (σ = 3.0).</p>
-
-
-## Plot 2
-
-
-<img src="results/plots/readme_plots/binary_rotated_sigma_0.5_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Binary image → Rotation affine transformation → Gaussian blur (σ = 0.5).</p>
-
-
-## Plot 3
-
-
-<img src="results/plots/readme_plots/binary_translated_sigma_2.0_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Binary image → Translation affine transformation → Gaussian blur (σ = 2.0).</p>
-
-
-## Plot 4
-
-
-<img src="results/plots/readme_plots/grayscale_translated_sigma_1.5_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Grayscale image → Translation affine transformation → Gaussian blur (σ = 1.5).</p>
-
-
-
-## Plot 5
-
-
-<img src="results/plots/readme_plots/hls_plot.png" width="900">
-
-<p><b>Processing Applied:</b> HLS color space conversion.</p>
-
-## Plot 6
-
-
-<img src="results/plots/readme_plots/normalized_rgb_rotated_sigma_0.5_plot.png" width="900">
-
-<p><b>Processing Applied:</b> HSV histogram equalization followed by conversion back to RGB → Rotation affine transformation → Gaussian blur (σ = 0.5).</p>
-
----
-
-# Final Image Counts
-
-| Stage                        | Number of Images |
-| ---------------------------- | ---------------- |
-| Original + Conversions       | 7                |
-| After Affine Transformations | 21               |
-| After Gaussian Blur          | 168              |
-| Selected Subset              | 42               |
-| Edge Detection Outputs       | 210              |
-| Comparison Plots             | 42               |
-| README Sample Plots          | 6                |
-
----
-
-# Conclusion
-
-This project demonstrated a complete image processing pipeline using OpenCV and Python. Multiple image transformations, filtering techniques, and edge detection algorithms were evaluated and compared.
-
-The experiments showed that increasing Gaussian blur reduces noise at the cost of image detail and that Canny edge detection generally provides the most accurate and visually appealing edge maps for this image dataset.
-
----
-
-## Author
-
-**Sai Keerthan Jami (Q459V832)**
-
-
-
