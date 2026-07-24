@@ -63,11 +63,26 @@ def segment_image(image_path):
 # Save mask
 # -------------------------------------------------
 
-def save_mask(mask, filename):
+def save_mask(mask, name):
+    """
+    Save both visualization and raw prediction.
+    """
 
-    mask = (mask * (255 // max(mask.max(), 1))).astype(np.uint8)
+    # Save raw labels
+    np.save(
+        f"outputs/masks/{name}_labels.npy",
+        mask
+    )
 
-    cv2.imwrite(filename, mask)
+    # Save visualization
+    visualization = (
+        mask * (255 // max(mask.max(), 1))
+    ).astype(np.uint8)
+
+    cv2.imwrite(
+        f"outputs/masks/{name}_mask.png",
+        visualization
+    )
 
 
 # -------------------------------------------------
@@ -108,10 +123,7 @@ def process(image_path, name):
 
     mask = segment_image(image_path)
 
-    save_mask(
-        mask,
-        f"outputs/masks/{name}_mask.png",
-    )
+    save_mask(mask, name)
 
     create_overlay(
         image_path,

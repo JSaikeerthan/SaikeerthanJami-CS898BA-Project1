@@ -1,0 +1,12 @@
+channel_a
+IoU : 0.6221
+Dice: 0.7670
+
+channel_b
+IoU : 0.6218
+Dice: 0.7668
+
+channel_c
+IoU : 0.6221
+Dice: 0.7670
+
