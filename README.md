@@ -1,94 +1,61 @@
-# SaikeerthanJami-CS898BA-Project1
+# Advanced Segmentation (Extra Credit)
 
-## CS 898BA – Image Analysis and Computer Vision
-
-**Homework 1**
-
----
-
-## Overview
-
-This project explores fundamental image processing and computer vision techniques using Python and OpenCV. The assignment includes:
-
-* Basic image statistics
-* Color space conversions
-* Histogram equalization
-* Affine transformations
-* Gaussian blurring
-* Edge detection
-* Visualization and comparison of edge detection methods
-
-The project was developed incrementally using Git with meaningful commits and all AI assistance was documented in `AI_Log.md`.
+**Course:** CS 898BA – Image Analysis and Computer Vision  
+**Student:** Saikeerthan Jami  
+**Repository:** SaikeerthanJami-CS898BA-Project1  
+**Branch:** Advanced-Segmentation
 
 ---
 
-## Project Structure
+# Project Overview
 
-```text
-SaikeerthanJami-CS898BA-Project1
-│
-├── images
-│   └── HW1_IMG.png
-│
-├── results
-│   ├── converted
-│   ├── transformed
-│   ├── blurred
-│   ├── subsets
-│   ├── edges
-│   └── plots
-│
-├── src
-│   ├── main.py
-│   ├── image_statistics.py
-│   ├── conversions.py
-│   ├── affine_transforms.py
-│   ├── gaussian_blur.py
-│   ├── create_subsets.py
-│   ├── edge_detection.py
-│   └── plot_results.py
-│
-├── README.md
-├── AI_Log.md
-├── requirements.txt
-└── .gitignore
+The objective of this extra credit assignment is to evaluate the robustness of a modern transformer-based semantic segmentation model when applied to an out-of-distribution image containing an unidentified figure.
+
+Unlike Homework 2, which relied on traditional image processing techniques, this project investigates the performance of **SegFormer**, a pretrained semantic segmentation network, under multiple preprocessing strategies.
+
+The assignment focuses on:
+
+- Transformer-based semantic segmentation
+- Multiple image preprocessing techniques
+- Quantitative evaluation
+- Qualitative analysis
+- Comparison with Homework 2
+
+The final objective is to compare the predicted segmentation against the manually created ground truth developed in Homework 2 using both visual analysis and numerical evaluation metrics.
+
+---
+
+# Repository Structure
+
+```
+images/
+
+outputs/
+    masks/
+    overlays/
+    metrics/
+
+src/
+    preprocess.py
+    segmentation.py
+    evaluate.py
+    visualization.py
+
+README.md
+requirements.txt
 ```
 
 ---
 
-## Requirements
+# Software Requirements
 
-* Python 3.13
-* OpenCV
-* NumPy
-* SciPy
-* Matplotlib
-* Pandas
-
----
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/JSaikeerthan/SaikeerthanJami-CS898BA-Project1.git
-cd SaikeerthanJami-CS898BA-Project1
-```
-
-Create a virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Activate the virtual environment:
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
+- Python 3.13
+- OpenCV
+- NumPy
+- Matplotlib
+- PyTorch
+- Hugging Face Transformers
+- Pillow
 
 Install dependencies:
 
@@ -98,298 +65,192 @@ pip install -r requirements.txt
 
 ---
 
-## Running the Project
+# Running the Project
 
-Execute:
+Activate the virtual environment:
 
 ```bash
-python src/main.py
+venv\Scripts\activate
 ```
 
----
+Run preprocessing:
 
-# Part 2: Image Processing
-
-## Basic Image Statistics
-
-For each RGB channel, the following statistics were computed:
-
-* Minimum
-* Maximum
-* Average
-* Median
-* Mode
-* Skew
-* Range
-* Standard Deviation
-* Variance
-
-### Results
-
-| Channel | Mean  | Median | Mode | Std Dev | Variance |
-| ------- | ----- | ------ | ---- | ------- | -------- |
-| Red     | 20.61 | 12     | 4    | 22.46   | 504.26   |
-| Green   | 24.64 | 16     | 10   | 22.23   | 493.96   |
-| Blue    | 21.83 | 10     | 4    | 26.23   | 687.99   |
-
-The relatively low mean intensity values indicate that the image is generally dark with a few bright regions.
-
----
-
-## Color Space Conversions
-
-The following image representations were generated:
-
-1. Original RGB Image
-2. Grayscale Image
-3. Binary Image
-4. HSV Image
-5. CIELAB Image
-6. HLS Image
-7. Histogram Equalized HSV Image converted back to RGB
-
-Total images:
-
-```text
-7 images
+```bash
+python src/preprocess.py
 ```
 
----
+Run SegFormer inference:
 
-## Histogram Equalization
-
-Histogram equalization was applied to the Value (V) channel of the HSV image.
-
-### Observations
-
-* Increased overall contrast
-* Improved visibility in darker regions
-* Enhanced object details
-* Better illumination normalization
-
----
-
-## Affine Transformations
-
-Two unique affine transformations were applied to each of the seven images.
-
-Examples:
-
-* Rotation
-* Translation
-* Scaling
-* Shearing
-
-Total images after transformation:
-
-```text
-21 images
+```bash
+python src/segmentation.py
 ```
 
----
+Evaluate segmentation:
 
-## Gaussian Blur
-
-Gaussian blur was applied using the following sigma values:
-
-```text
-0.5
-1.0
-1.5
-2.0
-2.5
-3.0
-3.5
+```bash
+python src/evaluate.py
 ```
 
-Total images:
+Generate the comparison visualization:
 
-```text
-168 images
+```bash
+python src/visualization.py
 ```
 
-### Discussion
+The complete pipeline performs:
 
-As sigma increased:
-
-* Noise reduction improved.
-* Fine textures disappeared.
-* Edges became softer.
-* High-frequency information was gradually removed.
-
-Small sigma values preserved image details, while large sigma values produced heavy smoothing and loss of detail.
+- Multi-channel preprocessing
+- SegFormer semantic segmentation
+- Overlay generation
+- Quantitative evaluation
+- Comparison visualization
 
 ---
 
-# Part 3: Edge Detection
+# Part 1: Channel A (Baseline RGB)
 
-The dataset of 168 images was randomly divided into four equally sized subsets.
+The original RGB image was used as the baseline input for the segmentation model without any modifications.
 
-Each subset contained:
-
-```text
-42 images
-```
-
-One subset was selected for edge detection experiments.
+This channel preserves the original lighting conditions, colors, and contrast captured and serves as the reference for comparing the effects of the additional preprocessing techniques.
 
 ---
 
-## Edge Detection Methods
+# Part 2: Channel B (HSV V-Channel Normalization)
 
-### Sobel
+The original image was converted from the RGB color space into HSV color space.
 
-#### Advantages
+Only the Value (V) channel was normalized while preserving the original Hue and Saturation components. The normalized image was then converted back to RGB before being passed to the segmentation model.
 
-* Fast computation
-* Provides gradient direction information
+## Advantages
 
-#### Disadvantages
+- Improves brightness consistency
+- Enhances visibility in darker regions
+- Preserves original color information
 
-* Produces thick edges
-* Sensitive to noise
+## Disadvantages
 
----
-
-### Laplacian
-
-#### Advantages
-
-* Detects edges in all directions
-* Highlights fine detail
-
-#### Disadvantages
-
-* Extremely sensitive to noise
-* Amplifies artifacts
+- May slightly alter local image contrast
+- Can introduce brightness artifacts in highly illuminated regions
 
 ---
 
-### Canny
+# Part 3: Channel C (RGB Channel Normalization)
 
-#### Advantages
+Each RGB channel was independently normalized using OpenCV normalization before being merged back into a single RGB image.
 
-* Produces thin and continuous edges
-* Excellent noise suppression
-* Strong edge localization
+This preprocessing technique increases the dynamic range of each color channel independently while maintaining the overall image structure.
 
-#### Disadvantages
+## Advantages
 
-* Requires threshold tuning
-* Computationally more expensive
+- Improves overall contrast
+- Enhances darker image regions
+- Preserves structural details
 
----
+## Disadvantages
 
-### Prewitt
-
-#### Advantages
-
-* Simple implementation
-* Computationally inexpensive
-
-#### Disadvantages
-
-* Less accurate than Sobel
-* More susceptible to noise
+- Independent normalization may slightly modify the original color relationships
+- Excessive normalization may amplify background textures
 
 ---
 
-## Edge Detection Analysis
+# Part 4: SegFormer Semantic Segmentation
 
-Among the four methods, Canny generally produced the cleanest and most continuous object boundaries while suppressing noise effectively.
+SegFormer is a transformer-based semantic segmentation architecture designed to perform pixel-level classification without requiring handcrafted image features.
 
-Sobel and Prewitt successfully detected major structures but generated thicker edges.
+A pretrained **SegFormer-B0** model trained on the ADE20K dataset was used to generate semantic segmentation predictions for each preprocessing channel.
 
-Laplacian highlighted many fine details but also amplified image noise and artifacts, especially in heavily blurred images.
+Unlike the classical segmentation techniques implemented in Homework 2, SegFormer performs semantic reasoning over the entire image using hierarchical transformer features rather than relying on pixel intensity or color similarity.
 
-For this dataset, Canny provided the best balance between noise suppression and edge localization.
-
----
-
-# Comparison Plots
-
-The project generated:
-
-```text
-42 comparison plots
-```
-
-Six representative plots were selected for this report.
-
-## Plot 1
-
-
-<img src="results/plots/readme_plots/original_rotated_sigma_3.0_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Original image → Rotation affine transformation → Gaussian blur (σ = 3.0).</p>
-
-
-## Plot 2
-
-
-<img src="results/plots/readme_plots/binary_rotated_sigma_0.5_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Binary image → Rotation affine transformation → Gaussian blur (σ = 0.5).</p>
-
-
-## Plot 3
-
-
-<img src="results/plots/readme_plots/binary_translated_sigma_2.0_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Binary image → Translation affine transformation → Gaussian blur (σ = 2.0).</p>
-
-
-## Plot 4
-
-
-<img src="results/plots/readme_plots/grayscale_translated_sigma_1.5_plot.png" width="900">
-
-<p><b>Processing Applied:</b> Grayscale image → Translation affine transformation → Gaussian blur (σ = 1.5).</p>
-
-
-
-## Plot 5
-
-
-<img src="results/plots/readme_plots/hls_plot.png" width="900">
-
-<p><b>Processing Applied:</b> HLS color space conversion.</p>
-
-## Plot 6
-
-
-<img src="results/plots/readme_plots/normalized_rgb_rotated_sigma_0.5_plot.png" width="900">
-
-<p><b>Processing Applied:</b> HSV histogram equalization followed by conversion back to RGB → Rotation affine transformation → Gaussian blur (σ = 0.5).</p>
+The predicted semantic labels were converted into a binary mask corresponding to the detected person before quantitative evaluation against the Homework 2 ground truth.
 
 ---
 
-# Final Image Counts
+# Quantitative Evaluation
 
-| Stage                        | Number of Images |
-| ---------------------------- | ---------------- |
-| Original + Conversions       | 7                |
-| After Affine Transformations | 21               |
-| After Gaussian Blur          | 168              |
-| Selected Subset              | 42               |
-| Edge Detection Outputs       | 210              |
-| Comparison Plots             | 42               |
-| README Sample Plots          | 6                |
+The manually created binary mask developed during Homework 2 was used as the pseudo-ground truth for evaluating the SegFormer segmentation results.
+
+The semantic segmentation output generated by SegFormer was converted into a binary mask representing the detected person before comparison with the ground truth.
+
+Two evaluation metrics were calculated:
+
+## Intersection over Union (IoU)
+
+\[
+IoU = \frac{|A \cap B|}{|A \cup B|}
+\]
+
+## Dice Coefficient
+
+\[
+Dice = \frac{2|A \cap B|}{|A| + |B|}
+\]
+
+---
+
+# Experimental Results
+
+| Input Channel | IoU | Dice |
+|---------------|------:|------:|
+| Original RGB | **0.6221** | **0.7670** |
+| HSV V-Channel Normalization | **0.6218** | **0.7668** |
+| RGB Channel Normalization | **0.6221** | **0.7670** |
+
+---
+
+# Discussion of Results
+
+The quantitative evaluation demonstrates that SegFormer successfully localized the unidentified figure across all three preprocessing channels.
+
+The Original RGB image and the RGB channel normalized image produced identical IoU and Dice scores, while HSV V-channel normalization produced only a negligible decrease in performance. The differences between the three preprocessing strategies were limited to the fourth decimal place, indicating that the pretrained SegFormer model is highly robust to moderate variations in image contrast and illumination.
+
+Compared with the classical image segmentation techniques implemented in Homework 2, SegFormer achieved substantially higher overlap with the manually generated ground truth while requiring no manual parameter tuning or threshold selection.
+
+Although the model slightly under-segmented portions of the figure, particularly around the arms and lower legs, it consistently identified the primary subject and produced accurate semantic boundaries throughout the image.
+
+These results demonstrate that transformer-based semantic segmentation provides significantly stronger generalization than traditional image processing methods when applied to challenging outdoor scenes.
+
+---
+
+# Comparison Visualization
+
+The comparison plot displays:
+
+- Original RGB image
+- HSV V-channel normalized image
+- RGB channel normalized image
+- SegFormer segmentation for Channel A
+- SegFormer segmentation for Channel B
+- SegFormer segmentation for Channel C
+- Homework 2 ground truth mask
+
+<p align="center">
+    <img src="outputs/comparison_plot.png" width="100%">
+</p>
+
+---
+
+# Comparison with Homework 2
+
+Homework 2 investigated several classical image segmentation techniques, including Otsu Thresholding, Adaptive Thresholding, and K-Means clustering. These methods relied heavily on manually selected preprocessing operations and algorithm-specific parameters.
+
+In contrast, the SegFormer model performed semantic segmentation using learned transformer representations without requiring manual threshold selection or feature engineering.
+
+While the classical methods were sensitive to illumination changes and image noise, SegFormer maintained nearly identical performance across all three preprocessing channels, demonstrating stronger robustness and improved generalization.
+
+The higher IoU and Dice scores obtained by SegFormer further indicate that modern transformer-based segmentation models provide more accurate object localization than traditional image processing techniques for this challenging image.
 
 ---
 
 # Conclusion
 
-This project demonstrated a complete image processing pipeline using OpenCV and Python. Multiple image transformations, filtering techniques, and edge detection algorithms were evaluated and compared.
+This extra credit assignment demonstrates the effectiveness of transformer-based semantic segmentation for challenging out-of-distribution imagery.
 
-The experiments showed that increasing Gaussian blur reduces noise at the cost of image detail and that Canny edge detection generally provides the most accurate and visually appealing edge maps for this image dataset.
+SegFormer successfully localized the unidentified figure using semantic understanding rather than handcrafted image processing techniques. The model achieved consistent segmentation performance across all preprocessing channels while maintaining strong agreement with the manually generated ground truth.
+
+The experimental results indicate that transformer-based segmentation models are considerably more robust than classical segmentation methods when applied to low-light outdoor scenes, making them well suited for complex real-world image analysis tasks.
 
 ---
 
-## Author
+# Author
 
-**Sai Keerthan Jami (Q459V832)**
-
-
-
+**Saikeerthan Jami (Q459V832)**
